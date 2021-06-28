@@ -1,0 +1,228 @@
+swagger: "2.0"
+info:
+  title: Weather Service
+  description: Service for weather information.
+  version: ""
+host: dev.myweatherdomain.com
+consumes:
+- application/json
+- application/xml
+- application/gob
+produces:
+- application/json
+- application/xml
+- application/gob
+paths:
+  /liveness:
+    get:
+      tags:
+      - healthcheck
+      summary: liveness healthcheck
+      operationId: healthcheck#liveness
+      responses:
+        "200":
+          description: OK response.
+          schema:
+            $ref: '#/definitions/HealthcheckLivenessResponseBody'
+            required:
+            - status
+      schemes:
+      - https
+  /readiness:
+    get:
+      tags:
+      - healthcheck
+      summary: readiness healthcheck
+      operationId: healthcheck#readiness
+      responses:
+        "200":
+          description: OK response.
+          schema:
+            $ref: '#/definitions/HealthcheckReadinessResponseBody'
+            required:
+            - status
+        "503":
+          description: Service Unavailable response.
+          schema:
+            $ref: '#/definitions/HealthcheckReadinessServiceUnavailableErrorResponseBody'
+            required:
+            - status
+      schemes:
+      - https
+  /v1/weather:
+    post:
+      tags:
+      - weather
+      summary: WeatherQuery weather
+      operationId: weather#WeatherQuery
+      parameters:
+      - name: WeatherQueryRequestBody
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/WeatherWeatherQueryRequestBody'
+          required:
+          - lat
+          - lon
+      responses:
+        "200":
+          description: OK response.
+          schema:
+            $ref: '#/definitions/WeatherWeatherQueryOKResponseBody'
+            required:
+            - temp
+        "400":
+          description: Bad Request response.
+          schema:
+            $ref: '#/definitions/WeatherWeatherQueryBadRequestResponseBody'
+            required:
+            - temp
+        "500":
+          description: Internal Server Error response.
+          schema:
+            $ref: '#/definitions/WeatherWeatherQueryInternalServerErrorResponseBody'
+            required:
+            - temp
+      schemes:
+      - https
+definitions:
+  HealthcheckLivenessResponseBody:
+    title: HealthcheckLivenessResponseBody
+    type: object
+    properties:
+      status:
+        type: string
+        example: up
+    example:
+      status: up
+    required:
+    - status
+  HealthcheckReadinessResponseBody:
+    title: HealthcheckReadinessResponseBody
+    type: object
+    properties:
+      status:
+        type: string
+        example: up
+    example:
+      status: up
+    required:
+    - status
+  HealthcheckReadinessServiceUnavailableErrorResponseBody:
+    title: HealthcheckReadinessServiceUnavailableErrorResponseBody
+    type: object
+    properties:
+      status:
+        type: string
+        example: status
+    example:
+      status: status
+    required:
+    - status
+  WeatherWeatherQueryBadRequestResponseBody:
+    title: WeatherWeatherQueryBadRequestResponseBody
+    type: object
+    properties:
+      feels_like:
+        type: number
+        example: 0.925941697626779
+        format: double
+      pressure:
+        type: integer
+        example: 8460000661884215238
+        format: int64
+      temp:
+        type: number
+        example: 0.41835581400315336
+        format: double
+      wind_speed:
+        type: integer
+        example: 9163331988570077644
+        format: int64
+    example:
+      feels_like: 0.6338667163259205
+      pressure: 2045409334969428896
+      temp: 0.14547656544203885
+      wind_speed: 4904193218430467086
+    required:
+    - temp
+  WeatherWeatherQueryInternalServerErrorResponseBody:
+    title: WeatherWeatherQueryInternalServerErrorResponseBody
+    type: object
+    properties:
+      feels_like:
+        type: number
+        example: 0.2611685897949558
+        format: double
+      pressure:
+        type: integer
+        example: 2147201040093145260
+        format: int64
+      temp:
+        type: number
+        example: 0.4685530891928919
+        format: double
+      wind_speed:
+        type: integer
+        example: 5430713134679718186
+        format: int64
+    example:
+      feels_like: 0.8173949043973839
+      pressure: 8762724312905358030
+      temp: 0.0328585354033926
+      wind_speed: 8220461620529370067
+    required:
+    - temp
+  WeatherWeatherQueryOKResponseBody:
+    title: WeatherWeatherQueryOKResponseBody
+    type: object
+    properties:
+      feels_like:
+        type: number
+        example: 0.7575669652209062
+        format: double
+      pressure:
+        type: integer
+        example: 8462161581153033122
+        format: int64
+      temp:
+        type: number
+        example: 0.3074968189135078
+        format: double
+      wind_speed:
+        type: integer
+        example: 1019686122700552568
+        format: int64
+    example:
+      feels_like: 0.6803703226679061
+      pressure: 4186361642926843793
+      temp: 0.8360313906939151
+      wind_speed: 1592473751262504167
+    required:
+    - temp
+  WeatherWeatherQueryRequestBody:
+    title: WeatherWeatherQueryRequestBody
+    type: object
+    properties:
+      lat:
+        type: number
+        description: Latitude coordinate of location.
+        example: 51.50853
+        format: double
+      lon:
+        type: number
+        description: Longitude coordinate of location.
+        example: -0.12574
+        format: double
+      units:
+        type: string
+        description: Units of measurement. Possible values are 'standard', 'metric'
+          or 'imperial'.
+        example: metric
+    example:
+      lat: 51.50853
+      lon: -0.12574
+      units: metric
+    required:
+    - lat
+    - lon
