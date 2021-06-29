@@ -535,7 +535,7 @@ func CookiePath(p string) {
 	cookieAttribute("path", p)
 }
 
-// CookieSecure initializes the "secure" attribute of a HTTP response cookie
+// CookieSecure initializes the "secute" attribute of a HTTP response cookie
 // with "Secure".
 //
 // CookieSecure must appear in a Cookie expression.
@@ -907,12 +907,7 @@ func Body(args ...interface{}) {
 			kind += " " + e.Name
 		}
 	case *expr.HTTPResponseExpr:
-		p, ok := e.Parent.(*expr.HTTPEndpointExpr)
-		if !ok {
-			eval.IncompatibleDSL()
-			return
-		}
-		ref = p.MethodExpr.Result
+		ref = e.Parent.(*expr.HTTPEndpointExpr).MethodExpr.Result
 		setter = func(att *expr.AttributeExpr) {
 			e.Body = att
 		}

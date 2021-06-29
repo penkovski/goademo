@@ -93,7 +93,6 @@ func httpRequestBody(a *HTTPEndpointExpr) *AttributeExpr {
 
 	// 2. Remove header, param and cookies attributes
 	body := NewMappedAttributeExpr(payload)
-	extendBodyAttribute(body)
 	removeAttributes(body, headers)
 	removeAttributes(body, cookies)
 	removeAttributes(body, params)
@@ -210,7 +209,6 @@ func buildHTTPResponseBody(name string, attr *AttributeExpr, resp *HTTPResponseE
 		return &AttributeExpr{Type: Empty}
 	}
 	body := NewMappedAttributeExpr(attr)
-	extendBodyAttribute(body)
 
 	// 2. Remove header and cookie attributes
 	removeAttributes(body, resp.Headers)
@@ -388,33 +386,85 @@ func removeAttribute(attr *MappedAttributeExpr, name string) {
 	}
 }
 
-// extendedBodyAttribute returns an attribute describing the HTTP
-// request/response body type by merging any Bases and References to the parent
-// attribute. This must be invoked during validation or to determine the actual
-// body type by removing any headers/params/cookies.
-func extendBodyAttribute(body *MappedAttributeExpr) {
-	att := body.AttributeExpr
-	if isEmpty(att) {
-		return
+// extendedHTTPRequestBody returns an attribute describing the HTTP request body.
+// This is used only in the validation phase to figure out the request body when
+// method Payload extends or references other types.
+func extendedHTTPRequestBody(a *HTTPEndpointExpr) *AttributeExpr {
+	const suffix = "RequestBody"
+	var (
+		name = concat(a.Name(), "Request", "Body")
+	)
+	if a.Body != nil {
+		a.Body = DupAtt(a.Body)
+		renameType(a.Body, name, suffix)
+		return a.Body
 	}
-	for _, ref := range att.References {
+
+	var (
+		payload  = a.MethodExpr.Payload
+		headers  = a.Headers
+		params   = a.Params
+		bodyOnly = headers.IsEmpty() && params.IsEmpty() && a.MapQueryParams == nil
+	)
+
+	// 1. If Payload is not an object then check whether there are params or
+	// headers defined and if so return empty type (payload encoded in
+	// request params or headers) otherwise return payload type (payload
+	// encoded in request body).
+	if !IsObject(payload.Type) {
+		if bodyOnly {
+			payload = DupAtt(payload)
+			renameType(payload, name, suffix)
+			return payload
+		}
+		return &AttributeExpr{Type: Empty}
+	}
+
+	// Merge extended and referenced types
+	payload = DupAtt(payload)
+	for _, ref := range payload.References {
 		ru, ok := ref.(UserType)
 		if !ok {
 			continue
 		}
-		att.Inherit(ru.Attribute())
+		payload.Inherit(ru.Attribute())
 	}
-	// unset references so that they don't get added back to the body type during
-	// finalize
-	att.References = nil
-	for _, base := range att.Bases {
+	for _, base := range payload.Bases {
 		ru, ok := base.(UserType)
 		if !ok {
 			continue
 		}
-		att.Merge(ru.Attribute())
+		payload.Merge(ru.Attribute())
 	}
-	// unset bases so that they don't get added back to the body type during
-	// finalize
-	att.Bases = nil
+
+	// 2. Remove header and param attributes
+	body := NewMappedAttributeExpr(payload)
+	removeAttributes(body, headers)
+	removeAttributes(body, params)
+	if a.MapQueryParams != nil && *a.MapQueryParams != "" {
+		removeAttribute(body, *a.MapQueryParams)
+	}
+	for att := range defaultRequestHeaderAttributes(a) {
+		removeAttribute(body, att)
+	}
+
+	// 3. Return empty type if no attribute left
+	if len(*AsObject(body.Type)) == 0 {
+		return &AttributeExpr{Type: Empty}
+	}
+
+	// 4. Build computed user type
+	att := body.Attribute()
+	ut := &UserTypeExpr{
+		AttributeExpr: att,
+		TypeName:      name,
+		UID:           a.Service.Name() + "#" + a.Name(),
+	}
+	appendSuffix(ut.Attribute().Type, suffix)
+
+	return &AttributeExpr{
+		Type:         ut,
+		Validation:   att.Validation,
+		UserExamples: att.UserExamples,
+	}
 }

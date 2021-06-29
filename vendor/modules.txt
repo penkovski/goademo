@@ -1,26 +1,46 @@
 # github.com/dimfeld/httppath v0.0.0-20170720192232-ee938bf73598
 github.com/dimfeld/httppath
+# github.com/dimfeld/httptreemux/v5 v5.3.0
+## explicit
+github.com/dimfeld/httptreemux/v5
+# github.com/getkin/kin-openapi v0.62.0
+## explicit
 # github.com/google/uuid v1.2.0
 github.com/google/uuid
+# github.com/gorilla/websocket v1.4.2
+github.com/gorilla/websocket
+# github.com/kelseyhightower/envconfig v1.4.0
+## explicit
+github.com/kelseyhightower/envconfig
 # github.com/manveru/faker v0.0.0-20171103152722-9fbc68a78c4d
 github.com/manveru/faker
+# github.com/penkovski/graceful v0.0.0-20210429094548-d4e99f50affc
+## explicit
+github.com/penkovski/graceful
+# github.com/rs/zerolog v1.23.0
+## explicit
+github.com/rs/zerolog
+github.com/rs/zerolog/internal/cbor
+github.com/rs/zerolog/internal/json
 # github.com/sergi/go-diff v1.2.0
+## explicit
 github.com/sergi/go-diff/diffmatchpatch
 # github.com/zach-klippenstein/goregen v0.0.0-20160303162051-795b5e3961ea
 github.com/zach-klippenstein/goregen
-# goa.design/goa/v3 v3.4.3
+# goa.design/goa/v3 v3.3.1
 ## explicit
 goa.design/goa/v3/dsl
 goa.design/goa/v3/eval
 goa.design/goa/v3/expr
+goa.design/goa/v3/http
 goa.design/goa/v3/pkg
-# golang.org/x/net v0.0.0-20210614182718-04defd469f4e
+# golang.org/x/net v0.0.0-20210510120150-4163338589ed
 ## explicit
-# golang.org/x/sys v0.0.0-20210616094352-59db8d763f22
+# golang.org/x/sys v0.0.0-20210514084401-e8d321eab015
 ## explicit
-# golang.org/x/tools v0.1.4
+# golang.org/x/tools v0.1.2
 ## explicit
-# google.golang.org/genproto v0.0.0-20210624195500-8bfb893ecb84
+# google.golang.org/genproto v0.0.0-20210513213006-bf773b8c8384
 ## explicit
-# google.golang.org/protobuf v1.27.0
+# google.golang.org/grpc v1.38.0
 ## explicit
