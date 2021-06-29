@@ -16,9 +16,17 @@ var WeatherQueryRequest = Type("WeatherQueryRequest", func() {
 })
 
 var WeatherQueryResult = Type("WeatherQueryResult", func() {
-	Field(1, "temp", Float64)
-	Field(2, "feels_like", Float64)
-	Field(3, "pressure", Int)
-	Field(4, "wind_speed", Int)
+	Field(1, "temp", Float64, func() {
+		Example(23.4)
+	})
+	Field(2, "feels_like", Float64, func() {
+		Example(22.1)
+	})
+	Field(3, "pressure", Int, func() {
+		Example(1024)
+	})
+	Field(4, "wind_speed", Int, func() {
+		Example(10)
+	})
 	Required("temp")
 })

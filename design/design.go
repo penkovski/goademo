@@ -76,7 +76,7 @@ var _ = Service("healthcheck", func() {
 })
 
 var _ = Service("openapi", func() {
-	Description("The openapi serves the OpenAPI(v3) definition.")
+	Description("The openapi service serves the OpenAPI(v3) definition.")
 	Meta("swagger:generate", "false")
 	HTTP(func() {
 		Path("/swagger-ui")

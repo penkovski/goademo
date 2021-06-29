@@ -71,10 +71,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/WeatherQueryResult'
               example:
-                feels_like: 0.28940177100794445
-                pressure: 4182469846481591513
-                temp: 0.9800462962300538
-                wind_speed: 4837219454189177381
+                feels_like: 22.1
+                pressure: 1024
+                temp: 23.4
+                wind_speed: 10
         "400":
           description: Bad Request response.
           content:
@@ -82,10 +82,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/WeatherQueryResult'
               example:
-                feels_like: 0.4918492209488689
-                pressure: 3456525917261053504
-                temp: 0.7073857363576652
-                wind_speed: 5497966619188418024
+                feels_like: 22.1
+                pressure: 1024
+                temp: 23.4
+                wind_speed: 10
         "500":
           description: Internal Server Error response.
           content:
@@ -93,10 +93,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/WeatherQueryResult'
               example:
-                feels_like: 0.8254494184927246
-                pressure: 1265099336773306726
-                temp: 0.5314365495128938
-                wind_speed: 374781901373090807
+                feels_like: 22.1
+                pressure: 1024
+                temp: 23.4
+                wind_speed: 10
 components:
   schemas:
     LivenessResponseBody:
@@ -139,30 +139,24 @@ components:
       properties:
         feels_like:
           type: number
-          example: 0.39810404641170455
+          example: 22.1
           format: double
         pressure:
           type: integer
-          example: 7404522694356190867
+          example: 1024
           format: int64
         temp:
           type: number
-          example: 0.5375015712497628
+          example: 23.4
           format: double
         wind_speed:
           type: integer
-          example: 6714187406412673715
+          example: 10
           format: int64
       example:
-        feels_like: 0.6274746697076189
-        pressure: 6040948167692002309
-        temp: 0.3837911121532482
-        wind_speed: 2183901827372585546
+        feels_like: 22.1
+        pressure: 1024
+        temp: 23.4
+        wind_speed: 10
       required:
       - temp
-tags:
-- name: healthcheck
-  description: The healthcheck service is used report on the liveness and readiness
-    status of the weather service.
-- name: weather
-  description: The weather service returns information for a given location.

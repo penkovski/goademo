@@ -125,25 +125,25 @@ definitions:
     properties:
       feels_like:
         type: number
-        example: 0.925941697626779
+        example: 22.1
         format: double
       pressure:
         type: integer
-        example: 8460000661884215238
+        example: 1024
         format: int64
       temp:
         type: number
-        example: 0.41835581400315336
+        example: 23.4
         format: double
       wind_speed:
         type: integer
-        example: 9163331988570077644
+        example: 10
         format: int64
     example:
-      feels_like: 0.6338667163259205
-      pressure: 2045409334969428896
-      temp: 0.14547656544203885
-      wind_speed: 4904193218430467086
+      feels_like: 22.1
+      pressure: 1024
+      temp: 23.4
+      wind_speed: 10
     required:
     - temp
   WeatherWeatherQueryInternalServerErrorResponseBody:
@@ -152,25 +152,25 @@ definitions:
     properties:
       feels_like:
         type: number
-        example: 0.2611685897949558
+        example: 22.1
         format: double
       pressure:
         type: integer
-        example: 2147201040093145260
+        example: 1024
         format: int64
       temp:
         type: number
-        example: 0.4685530891928919
+        example: 23.4
         format: double
       wind_speed:
         type: integer
-        example: 5430713134679718186
+        example: 10
         format: int64
     example:
-      feels_like: 0.8173949043973839
-      pressure: 8762724312905358030
-      temp: 0.0328585354033926
-      wind_speed: 8220461620529370067
+      feels_like: 22.1
+      pressure: 1024
+      temp: 23.4
+      wind_speed: 10
     required:
     - temp
   WeatherWeatherQueryOKResponseBody:
@@ -179,25 +179,25 @@ definitions:
     properties:
       feels_like:
         type: number
-        example: 0.7575669652209062
+        example: 22.1
         format: double
       pressure:
         type: integer
-        example: 8462161581153033122
+        example: 1024
         format: int64
       temp:
         type: number
-        example: 0.3074968189135078
+        example: 23.4
         format: double
       wind_speed:
         type: integer
-        example: 1019686122700552568
+        example: 10
         format: int64
     example:
-      feels_like: 0.6803703226679061
-      pressure: 4186361642926843793
-      temp: 0.8360313906939151
-      wind_speed: 1592473751262504167
+      feels_like: 22.1
+      pressure: 1024
+      temp: 23.4
+      wind_speed: 10
     required:
     - temp
   WeatherWeatherQueryRequestBody:
