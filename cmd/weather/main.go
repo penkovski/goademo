@@ -5,6 +5,8 @@ import (
 	"os"
 	"time"
 
+	"github.com/penkovski/goademo/internal/clients/openweather"
+
 	"github.com/kelseyhightower/envconfig"
 	"github.com/penkovski/graceful"
 	"github.com/rs/zerolog"
@@ -27,12 +29,15 @@ func main() {
 		logger.Fatal().Err(err).Send()
 	}
 
+	// create clients and service dependencies
+	openweather := openweather.New(cfg.OpenWeather.Addr, cfg.OpenWeather.APIKey)
+
 	var (
 		weatherSvc     gweather.Service
 		healthcheckSvc ghealthcheck.Service
 	)
 	{
-		weatherSvc = weather.New(logger)
+		weatherSvc = weather.New(logger, openweather)
 		healthcheckSvc = healthcheck.New()
 	}
 
@@ -94,8 +99,4 @@ func main() {
 	}
 
 	logger.Info().Msg("bye bye")
-}
-
-func openAPIHandler() *http.Handler {
-	return nil
 }
