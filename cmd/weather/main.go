@@ -5,8 +5,6 @@ import (
 	"os"
 	"time"
 
-	"github.com/penkovski/goademo/internal/clients/openweather"
-
 	"github.com/kelseyhightower/envconfig"
 	"github.com/penkovski/graceful"
 	"github.com/rs/zerolog"
@@ -17,6 +15,7 @@ import (
 	openapisvr "github.com/penkovski/goademo/gen/http/openapi/server"
 	gweathersrv "github.com/penkovski/goademo/gen/http/weather/server"
 	gweather "github.com/penkovski/goademo/gen/weather"
+	"github.com/penkovski/goademo/internal/clients/openweather"
 	"github.com/penkovski/goademo/internal/healthcheck"
 	"github.com/penkovski/goademo/internal/weather"
 )

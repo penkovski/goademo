@@ -2,7 +2,7 @@ package weather
 
 import (
 	"context"
-	"errors"
+	"fmt"
 
 	"github.com/rs/zerolog"
 
@@ -14,7 +14,10 @@ type OpenWeather interface {
 }
 
 type WeatherInfo struct {
-	Temp float64
+	Temp      float64
+	FeelsLike float64
+	Pressure  int
+	Humidity  int
 }
 
 type Service struct {
@@ -35,10 +38,21 @@ func (s *Service) WeatherQuery(ctx context.Context, req *weather.WeatherQueryReq
 
 	weatherInfo, err := s.openweather.WeatherQuery(ctx, req.Lat, req.Lon, units)
 	if err != nil {
-		s.logger.Err(err).Msg("fetch weather info from open weather")
-		//return nil, goahttp.NewErrorResponse(err)
-		return nil, errors.New("oops")
+		s.logger.Err(err).Msg("failed to get weather info")
+		return nil, fmt.Errorf("failed to get weather info: %w", err)
 	}
 
-	return &weather.WeatherQueryResult{Temp: weatherInfo.Temp}, nil
+	return &weather.WeatherQueryResult{
+		Temp:      weatherInfo.Temp,
+		FeelsLike: ptrFloat64(weatherInfo.FeelsLike),
+		Pressure:  ptrInt(weatherInfo.Pressure),
+	}, nil
+}
+
+func ptrFloat64(f float64) *float64 {
+	return &f
+}
+
+func ptrInt(i int) *int {
+	return &i
 }

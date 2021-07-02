@@ -2,7 +2,7 @@ version: '3'
 
 services:
   weather:
-    container_name: goademo
+    container_name: weather
     build:
       context: $GOPATH/src/github.com/penkovski/goademo
       dockerfile: Dockerfile.dev
@@ -11,7 +11,7 @@ services:
     environment:
       HTTP_HOST: ""
       HTTP_PORT: "8080"
-      OPENWEATHER_ADDR: "https://openweathermap.org/api"
+      OPENWEATHER_ADDR: "https://api.openweathermap.org/data/2.5/onecall"
       OPENWEATHER_APIKEY: "deadbeef"
     ports:
       - "8080:8080"
