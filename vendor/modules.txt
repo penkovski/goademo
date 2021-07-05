@@ -3,8 +3,6 @@ github.com/dimfeld/httppath
 # github.com/dimfeld/httptreemux/v5 v5.3.0
 ## explicit
 github.com/dimfeld/httptreemux/v5
-# github.com/getkin/kin-openapi v0.62.0
-## explicit
 # github.com/google/uuid v1.2.0
 github.com/google/uuid
 # github.com/gorilla/websocket v1.4.2
@@ -34,13 +32,3 @@ goa.design/goa/v3/eval
 goa.design/goa/v3/expr
 goa.design/goa/v3/http
 goa.design/goa/v3/pkg
-# golang.org/x/net v0.0.0-20210510120150-4163338589ed
-## explicit
-# golang.org/x/sys v0.0.0-20210514084401-e8d321eab015
-## explicit
-# golang.org/x/tools v0.1.2
-## explicit
-# google.golang.org/genproto v0.0.0-20210513213006-bf773b8c8384
-## explicit
-# google.golang.org/grpc v1.38.0
-## explicit
